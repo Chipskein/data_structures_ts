@@ -1,0 +1,16 @@
+{
+  "name": "data_structures",
+  "version": "1.0.0",
+  "description": "this is my data_structures studies implemented with typescript",
+  "main": "index.ts",
+  "scripts": {
+    "start": "ts-node index.ts"
+  },
+  "author": "Chipskein (Bruno Ariel)",
+  "license": "MIT",
+  "dependencies": {
+    "inquirer": "^8.2.0",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.5"
+  }
+}
