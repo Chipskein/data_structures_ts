@@ -1,7 +1,7 @@
-import {TestDynamicArray} from './dynamic_array'
-import {TestDoublyLinkedList} from './doubly_linked_lists'
-import { TestStack } from './stack';
-import { TestQueue } from './queue';
+import {TestDynamicArray} from './structures/dynamic_array'
+import {TestDoublyLinkedList} from './structures/doubly_linked_lists'
+import { TestStack } from './structures/stack';
+import { TestQueue } from './structures/queue';
 const  inquirer = require('inquirer');
 inquirer
   .prompt([
