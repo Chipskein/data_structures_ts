@@ -1,4 +1,5 @@
 import {TestDynamicArray} from './dynamic_array'
+import {TestDoublyLinkedList} from './doubly_linked_lists'
 const  inquirer = require('inquirer');
 inquirer
   .prompt([
@@ -6,7 +7,7 @@ inquirer
       type: 'list',
       name: 'menu',
       message: 'TEST DATA_STRUCTURE',
-      choices: ['Dynamic Array'],
+      choices: ['Dynamic Array','Doubly Linked List'],
     },
     
   ])
@@ -15,6 +16,10 @@ inquirer
             case 'Dynamic Array':
                 TestDynamicArray();
             break;
+            case 'Doubly Linked List':
+                TestDoublyLinkedList();
+            break;
+            
         }
     }
 );
