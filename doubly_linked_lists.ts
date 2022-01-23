@@ -5,7 +5,7 @@ const doing=colors.magentaBright;
 const warn=colors.yellowBright;
 const error=colors.red;
 
-class Node<T>{
+export class Node<T>{
     public data:any = null;
     public prev:Node<T> | null = null;
     public next:Node<T> | null = null;
