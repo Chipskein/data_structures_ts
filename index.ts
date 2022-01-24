@@ -2,6 +2,7 @@ import {TestDynamicArray} from './structures/dynamic_array'
 import {TestDoublyLinkedList} from './structures/doubly_linked_lists'
 import { TestStack } from './structures/stack';
 import { TestQueue } from './structures/queue';
+import { TestBinaryHeap } from './structures/binary_heap';
 const  inquirer = require('inquirer');
 inquirer
   .prompt([
@@ -9,7 +10,7 @@ inquirer
       type: 'list',
       name: 'menu',
       message: 'TEST DATA_STRUCTURE',
-      choices: ['Dynamic Array','Doubly Linked List','Stack','Queue'],
+      choices: ['Dynamic Array','Doubly Linked List','Stack','Queue','Binary Heap'],
     },
     
   ])
@@ -24,9 +25,12 @@ inquirer
             case 'Stack':
                 TestStack();
               break;
-              case 'Queue':
+            case 'Queue':
                 TestQueue();
-              break;
+            break;
+            case 'Binary Heap':
+                TestBinaryHeap();
+            break;
         }
     }
 );
