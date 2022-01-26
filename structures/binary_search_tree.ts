@@ -22,14 +22,8 @@ class BinarySearchTree<T>{
     private recursive_Add(newnode:any,data:number){
         if(newnode==null) newnode=new node(data);
         else{
-            if(newnode.data>data){
-                //add to left
-                newnode.left=this.recursive_Add(newnode.left,data)
-            }
-            if(newnode.data<data){
-                //add to right
-                newnode.right=this.recursive_Add(newnode.right,data)
-            }   
+            if(newnode.data>data) newnode.left=this.recursive_Add(newnode.left,data)
+            if(newnode.data<data) newnode.right=this.recursive_Add(newnode.right,data) 
         }
         return newnode
     }

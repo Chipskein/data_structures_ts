@@ -11,7 +11,7 @@ inquirer
       type: 'list',
       name: 'menu',
       message: 'TEST DATA_STRUCTURE',
-      choices: ['Dynamic Array','Doubly Linked List','Stack','Queue','Binary Heap','Binary Search Tree'],
+      choices: ['Dynamic Array','Doubly Linked List','Stack','Queue','Binary Heap','Binary Search Tree','Hash Table'],
     },
     
   ])
@@ -34,6 +34,8 @@ inquirer
             break;
             case 'Binary Search Tree':
                 TestBinarySearchTree()
+            break;
+            case 'Hash Table':
             break;
         }
     }
