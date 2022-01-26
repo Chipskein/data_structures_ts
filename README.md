@@ -2,6 +2,7 @@
 ## Description
 This is my first implementation of some data structures that i have been studing lately
 ### Dynamic Array
+![array](https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Dynamic_array.svg/220px-Dynamic_array.svg.png)
 ### Stack
 ![stack_image](https://www.softwaretestinghelp.com/wp-content/qa/uploads/2019/06/pictorial-representation-of-stack.png)
 ### Queue
