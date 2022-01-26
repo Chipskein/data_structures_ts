@@ -27,7 +27,6 @@ export class BinaryHeap<T>{
     public isEmpty(){return this.size==0;}
     public insertNode(data:any){
         //insert node in the Binary tree and verify heap invariant
-        //if index is diferent from 0 and is empty the Tree is empty
         if(this.isEmpty()){
             this.array[0]=data;
             this.size++;
@@ -35,30 +34,55 @@ export class BinaryHeap<T>{
         else{
             this.array[this.size]=data
             this.size++
-
-            let index=this.size-1;
-            let convert:any=((index-1)/2)//BUG Type
-            let parent_index=parseInt(convert);
-            if(!this.min){
-                while(this.array[parent_index]<this.array[index]){
-                    this.swap(parent_index,index)
-                    index=parent_index;
-                    convert=((index-1)/2)
-                    parent_index=parseInt(convert);
-                }
-            }
-            else{
-                while(this.array[parent_index]>this.array[index]){
-                    this.swap(parent_index,index)
-                    index=parent_index;
-                    convert=((index-1)/2)
-                    parent_index=parseInt(convert);
-                }
-            }
+            this.heapfy_up(this.size-1)
         }
     }
     public removeNode(index:number){
         //remove a node from binary tree and ajust heap invariant
+        if(!this.isEmpty()&&index>=0&&index<this.size){
+            this.swap(index,this.size-1);
+            let removed_node=this.array.pop();
+            this.size--;
+            this.heapfy_down(index);            
+            return removed_node;
+        }
+    }
+    public heapfy_up(index:number){
+        //used in insert
+        let parent_index=Math.floor((index-1)/2);
+        let conditional= !this.min ? this.array[parent_index]<this.array[index]:this.array[parent_index]>this.array[index];
+        while(conditional){
+            this.swap(parent_index,index)
+            index=parent_index;
+            parent_index=Math.floor((index-1)/2);
+            conditional= !this.min ? this.array[parent_index]<this.array[index]:this.array[parent_index]>this.array[index];
+        }
+    
+    }
+    public heapfy_down(index:number){
+        //used on removal
+        let leftindex=2*index+1;
+        let rightindex=2*index+2;
+        let while_conditional= !this.min ? this.array[index]<this.array[leftindex]||this.array[index]<this.array[rightindex]:this.array[index]>this.array[leftindex]||this.array[index]>this.array[rightindex]
+        let conditional_left = !this.min ? this.array[index]<this.array[leftindex]&&this.array[leftindex]>this.array[rightindex]:this.array[index]>this.array[leftindex]&&this.array[leftindex]<this.array[rightindex]
+        let conditional_right = !this.min ? this.array[index]<this.array[rightindex]&&this.array[leftindex]<this.array[rightindex]:this.array[index]>this.array[rightindex]&&this.array[leftindex]>this.array[rightindex]
+        while(while_conditional){
+            if(conditional_left) {
+                this.swap(index,leftindex);
+                index=leftindex;
+            }
+            if(conditional_right){
+                this.swap(index,rightindex);
+                index=rightindex;
+            }
+            leftindex=2*index+1;
+            rightindex=2*index+2
+            while_conditional= !this.min ? this.array[index]<this.array[leftindex]||this.array[index]<this.array[rightindex]:this.array[index]>this.array[leftindex]||this.array[index]>this.array[rightindex]
+            conditional_left = !this.min ? this.array[index]<this.array[leftindex]&&this.array[leftindex]>this.array[rightindex]:this.array[index]>this.array[leftindex]&&this.array[leftindex]<this.array[rightindex]
+            conditional_right = !this.min ? this.array[index]<this.array[rightindex]&&this.array[leftindex]<this.array[rightindex]:this.array[index]>this.array[rightindex]&&this.array[leftindex]>this.array[rightindex]
+        }
+        
+      
     }
     public swap(index:number,index2:number){
         if(!this.isEmpty()&&index>=0&&index<this.size&&index2>=0&&index2<this.size){
@@ -69,121 +93,72 @@ export class BinaryHeap<T>{
             this.array[index2]=index_value;
             return 1;
         }
-        else return -1
+        else throw new Error("Swap failure")
+        
     };
     public poll(){
-        //remove root node; and set a new root 
-        //swap root to newroot
-        this.swap(0,this.size-1)
-        //delete oldroot
-        let oldroot=this.array.pop();
-        this.size--;
-        //now validate heap property
-        let index=0;
-        let leftindex=2*index+1;
-        let rightindex=2*index+2;
-        if(!this.min){
-            while(this.array[index]<this.array[leftindex]||this.array[index]<this.array[rightindex]){
-                if(this.array[index]<this.array[leftindex]&&this.array[leftindex]>this.array[rightindex]) {
-                    this.swap(index,leftindex);
-                    index=leftindex;
-                }
-                if(this.array[index]<this.array[rightindex]&&this.array[leftindex]<this.array[rightindex]){
-                    this.swap(index,rightindex);
-                    index=rightindex;
-                }
-                leftindex=2*index+1;
-                rightindex=2*index+2
-            }
-        }
-        else{
-            while(this.array[index]>this.array[leftindex]||this.array[index]>this.array[rightindex]){
-                if(this.array[index]>this.array[leftindex]&&this.array[leftindex]<this.array[rightindex]) {
-                    this.swap(index,leftindex);
-                    index=leftindex;
-                }
-                if(this.array[index]>this.array[rightindex]&&this.array[leftindex]>this.array[rightindex]){
-                    this.swap(index,rightindex);
-                    index=rightindex;
-                }
-                leftindex=2*index+1;
-                rightindex=2*index+2
-            }
-        }
-        return oldroot;
+        let removed_nod=this.removeNode(0);
+        return removed_nod;
     }
-    public getTop(){
-        if(!this.isEmpty()) return this.array[0];
-    }
-    public peekNode(index:number){
-        if(!this.isEmpty()&&index<this.size&&index>=0) return this.array[index];
-    }
+    public getTop(){if(!this.isEmpty()) return this.array[0];}
+    public peekNode(index:number){if(!this.isEmpty()&&index<this.size&&index>=0) return this.array[index];}
     public ChangeHeapType(){
-        if(!this.min){
-            this.min=true;
-            let old_array=this.array;
-            this.array=[];
-            this.size=0;
-            old_array.forEach(element => {
-                this.insertNode(element);
-            });
-        }
-        else{
-            this.min=false;
-            //convert to MaxHeap
-            let old_array=this.array;
-            this.array=[];
-            this.size=0;
-            old_array.forEach(element => {
-                this.insertNode(element);
-            });
-        }
+        //cached old array
+        let before_conversion=this.array;
+        //set converted  
+        // min->max=true->false
+        // max->min=false->true      
+        !this.min ? this.min=true:this.min=false;
+        //clean array
+        this.array=[];
+        this.size=0;
+        before_conversion.forEach(element=>{
+            this.insertNode(element);
+        })
     }
     public getHeapType(){return this.min ? "MinHeap":"MaxHeap";}
-
     public getTree(){return this.array;}
-    public clearTree(){this.array=[];}
+    public clearTree(){this.array=[];this.size=0;}
 }
 export function TestBinaryHeap(){
     console.log(doing("Creating Heaps..."));
         let maxheap=new BinaryHeap();
-        let minheap=new BinaryHeap(true);
     console.log(pass("Creating Heaps[OK]"));
+    console.log(warn("---------------------------------------------------"))
     console.log(doing("Inserting Nodes on both heaps..."));
-    let maxpre_order=[];
-    let minpre_order=[];
-        for(let c=1;c<=10;c++){
-            let number=Math.ceil(Math.random()*200);
-            let number2=Math.ceil(Math.random()*200);
-            maxpre_order.push(number);
-            maxheap.insertNode(number);
-            minpre_order.push(number2);
-            minheap.insertNode(number2);
-        }
+    let maxpre_order=[]//[ 167,159,41,168,61,184,188,158,156,17];
+    for(let c=0;c<=10;c++){
+        let number=Math.ceil(Math.random()*300);
+        maxpre_order.push(number);
+        maxheap.insertNode(number);
+    }
     console.log(pass("Inserting Nodes on both heaps[OK]"));
-
-    console.log("Pre Insert Order:",maxheap.getHeapType(),maxpre_order);
-    console.log("Sort Order",maxheap.getHeapType(),maxheap.getTree());
-
-    console.log("Pre Insert Order:",minheap.getHeapType(),minpre_order);
-    console.log("Sort Order",minheap.getHeapType(),minheap.getTree());
-
-    console.log(pass("Clearing Tree"));
-        minheap.clearTree();
-    console.log("Cleared:",minheap.getHeapType(),minheap.getTree())
-    
-    console.log(doing("Removing Root Node..."));
-    console.log(pass("Removed:"),maxheap.getHeapType(),maxheap.poll());
-
-    /*
-        console.log("Removing Root Node...")
-        console.log("Removed:",minheap.poll());
-    */
+    console.log("Insert Order:",maxheap.getHeapType(),maxpre_order);
+    console.log("Sorted Order",maxheap.getHeapType(),maxheap.getTree());
+    console.log(warn("---------------------------------------------------"))
+    console.log("Removing Root Node...")
+    console.log("Removed:",maxheap.poll());
+    console.log("New heap",maxheap.getHeapType(),maxheap.getTree())
+    console.log(warn("---------------------------------------------------"))
+    console.log("Removing Node at 4 position...")
+    console.log("Removed:",maxheap.removeNode(4));
+    console.log("New heap",maxheap.getHeapType(),maxheap.getTree())
+    console.log(warn("---------------------------------------------------"))
     console.log(doing("Changing Heap Type..."))
     console.log("Pre Changing order:",maxheap.getHeapType(),maxheap.getTree());
         maxheap.ChangeHeapType();
     console.log("After Changing",maxheap.getHeapType(),maxheap.getTree());
     console.log(pass("Changing Heap Type[OK]"))
+    console.log(warn("---------------------------------------------------"))
+    console.log(doing("Changing Heap Type..."))
+    console.log("Pre Changing order:",maxheap.getHeapType(),maxheap.getTree());
+        maxheap.ChangeHeapType();
+    console.log("After Changing",maxheap.getHeapType(),maxheap.getTree());
+    console.log(pass("Changing Heap Type[OK]"))
+    console.log(warn("---------------------------------------------------"))
+    console.log(pass("Clearing Tree"));
+        maxheap.clearTree();
+    console.log("Cleared:",maxheap.getHeapType(),maxheap.getTree())
 }
 TestBinaryHeap();
 
