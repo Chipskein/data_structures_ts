@@ -160,7 +160,6 @@ export function TestBinaryHeap(){
         maxheap.clearTree();
     console.log("Cleared:",maxheap.getHeapType(),maxheap.getTree())
 }
-TestBinaryHeap();
 
 
 
