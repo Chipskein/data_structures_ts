@@ -28,8 +28,21 @@ class BinarySearchTree<T>{
         return newnode
     }
     public removeElement(data:number){}
-    public find(){}
-    public replace(){}
+    public find(data:number,root = this.root){
+        if(root!=null){
+            if(data==root.data) console.log("FOUND",data);
+            else if(root.left==null&&root.right==null) console.log("DIDN'T FIND",data);
+            else {
+                if(data<root.data)
+                    this.find(data,root.left);    
+                ;
+                if(data>root.data)
+                    this.find(data,root.right) 
+                ;
+            }
+        }
+    }
+    public replace(data:number,newdata:number){}
 }
 export function TestBinarySearchTree(){
     console.log(warn("---------------------------------------------------"))
