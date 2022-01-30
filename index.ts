@@ -1,8 +1,8 @@
 import {TestDynamicArray} from './structures/dynamic_array'
 import {TestDoublyLinkedList} from './structures/doubly_linked_lists'
-import { TestStack } from './structures/stack';
-import { TestQueue } from './structures/queue';
-import { TestBinaryHeap } from './structures/binary_heap';
+import {TestStack} from './structures/stack';
+import {TestQueue} from './structures/queue';
+import {TestBinaryHeap} from './structures/binary_heap';
 import {TestBinarySearchTree} from './structures/binary_search_tree';
 const  inquirer = require('inquirer');
 inquirer
